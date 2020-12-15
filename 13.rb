@@ -1,21 +1,5 @@
 #!/usr/bin/env ruby
 
-# gcd via Euclidean algo
-def mcd(a,b)
-	while a!=b
-		if a>b
-			a=a-b
-		else
-			b=b-a
-		end
-	end
-	return a
-end
-def lcm(a, b)
-	return  a*b / mcd(a,b)
-end
-
-
 class BusSchedule
 	def initialize(s)
 		ll = s.lines
@@ -73,13 +57,11 @@ class BusSchedule
 			okb=[]
 			remb.each do |p,i|
 				if (t+i)%p == 0
-					# dt = lcm(dt, p)
 					dt = dt.lcm(p)
 					okb << [p,i]
 				end
 			end
 			remb = remb - okb
-			# puts "t=#{t} dt=#{dt} okb: #{okb}  remb: #{remb}"
 			break if remb.empty?
 		end
 		t
