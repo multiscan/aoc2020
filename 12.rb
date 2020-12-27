@@ -73,7 +73,7 @@ class Ship2
 		        -1, 0]
 	}
 
-	def initialize(current_direction="E")
+	def initialize()
 		@pos = [0,0]
 		@wp_rel_pos = [10,1]
 	end
@@ -89,7 +89,7 @@ class Ship2
 		else
 			if directive == "R"
 				directive = "L"
-				amount = (amount + 180)%360
+				amount = amount == 180 ? amount : (amount + 180)%360
 			end
 			if directive == "L" # rotate the waypoint around the ship
 				rot = ROTATIONS[amount]
