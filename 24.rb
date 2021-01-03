@@ -110,7 +110,6 @@ puts "After all of the instructions have been followed there are #{bc} black til
 # Question 2: How many tiles will be black after 100 days?
 100.times do |i|
 	tf.evolve
-	puts "Day #{i+1}: #{tf.black_count}\n" if i<10 || (i+1)%10==0
 end
 bc=tf.black_count
 puts "After 100 days there are #{bc} tiles"

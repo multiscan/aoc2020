@@ -26,7 +26,6 @@ class Code
 		j=0
 		i=1
 		s=@msg[i]+@msg[j]
-		puts "#{i} #{j} #{s} / #{n}"
 		while s!=n && i<@msg.count && j<i
 			if s<n
 				i = i + 1
@@ -35,7 +34,6 @@ class Code
 				s = s - @msg[j]
 				j = j + 1
 			end
-			puts "#{i} #{j} #{s} / #{n}   - #{@msg[j..i]}"
 		end
 		if s==n
 			@msg[j..i]

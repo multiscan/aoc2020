@@ -8,7 +8,6 @@ class Rule
 			@name = m[1]
 			@r1 = m[2].split("-").map{|v| v.to_i}
 			@r2 = m[3].split("-").map{|v| v.to_i}
-			puts "s -> '#{@name}': r1=#{@r1}, r2=#{@r2}"
 		else
 			raise "Invalid rule #{s}"
 		end
@@ -50,12 +49,6 @@ class TicketDecoder
 	end
 
 	def discard_nearby_ticket_with_scan_errors!()
-		# @nbval.map do |vals|
-		# 	vvss = vals.map do |v| 
-		# 		is_value_compatible_with_at_least_one_rule?(v) ? "#{v}" : "<#{v}>"
-		# 	end.join(" ")
-		# 	puts vvss
-		# end
 		@nbval.select! do |vals|
 			! vals.any? {|v| !is_value_compatible_with_at_least_one_rule?(v)}
 		end
@@ -63,7 +56,7 @@ class TicketDecoder
 
 	def find_rules_indexing
 		discard_nearby_ticket_with_scan_errors!
-		puts "No. tickets after discarding scan errors: #{@nbval.count}"
+		# puts "No. tickets after discarding scan errors: #{@nbval.count}"
 
 		# bit matrix rules x values that 
 		# is true if the rule validates the given value for all the tickets
@@ -77,10 +70,10 @@ class TicketDecoder
 			end
 			cm
 		end
-		cmpmatrix.each_with_index do |rule, i|
-			is=printf("%2d ", i)
-			puts rule.map{|v| v ? 1 : 0}.join(" ")
-		end
+		# cmpmatrix.each_with_index do |rule, i|
+		# 	is=printf("%2d ", i)
+		# 	puts rule.map{|v| v ? 1 : 0}.join(" ")
+		# end
 
 		# it would have been faster to produce directly this one
 		pathgraph=[]
@@ -91,37 +84,30 @@ class TicketDecoder
 			end
 			pathgraph << cn
 		end
-		pathgraph.each_with_index do |rule, i|
-			is=printf("%2d ", i)
-			puts rule.map{|v| printf("%3d", v)}.join(" ")
-		end
+		# pathgraph.each_with_index do |rule, i|
+		# 	is=printf("%2d ", i)
+		# 	puts rule.map{|v| printf("%3d", v)}.join(" ")
+		# end
 		# if there is a line with only one index we can
 		# remove that index from all the other lines 
 		# (something like beleif propagation)
 		# if pathgraph.any? {|line| line.count==1}
 		single_vals=[]
 		while line = pathgraph.find {|l| l.count==1 and !single_vals.include?(l.first)}
-			puts "line with single value: #{line}"
 			v = line.first
 			single_vals << v
 			pathgraph.each do |l|
 				l.delete(v) unless l.count == 1
 			end
 		end
-		puts "Dopo riduzione:"
-		pathgraph.each_with_index do |rule, i|
-			is=printf("%2d ", i)
-			puts rule.map{|v| printf("%3d", v)}.join(" ")
-		end
+		# pathgraph.each_with_index do |rule, i|
+		# 	is=printf("%2d ", i)
+		# end
 		# check if we are lucky!
 		if !pathgraph.any?{|l| l.count > 1}
-			puts "YESSS we are lucky!"
 			value_index = pathgraph.map{|l| l.first}
 			return value_index
 		end
-
-		puts "Too bad we have to switch to slower algo..."
-
 	end
 
 	def sum_of_departure_values
@@ -177,15 +163,9 @@ nearby tickets:
 """
 td = TicketDecoder.new(test2)
 r = td.scanning_error_rate()
-puts "test2 scan error rate: #{r}"
 
 # Question 2: look for the six fields on your ticket that start with the word 
 #           departure. What do you get if you multiply those six values together?
 td = TicketDecoder.new(File.read("input/16.txt"))
 r = td.sum_of_departure_values
 puts "Product of the 6 departure values: #{r}"
-
-
-
-
-

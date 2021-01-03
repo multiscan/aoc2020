@@ -44,8 +44,7 @@ t1 = [
 	mg = MemoryGame.new(t)
 	mg.run(2020)
 	r = mg.log.last
-	assert "Test 1 failed for t='#{t}': #{r} instead of #{e}" unless r == e
-	puts "#{t} -> #{r} / #{e}"
+	raise "Test 1 failed for t='#{t}': #{r} instead of #{e}" unless r == e
 end
 
 # Question 1: Given your starting numbers, what will be the 2020th number spoken?
@@ -54,21 +53,20 @@ mg.run(2020)
 r = mg.log.last
 puts "The 2020th number spoken is #{r}."
 
-# t2 = [
-#     "0,3,6", 175594,
-#     "1,3,2", 2578,
-#     "2,1,3", 3544142,
-#     "1,2,3", 261214,
-#     "2,3,1", 6895259,
-#     "3,2,1", 18,
-#     "3,1,2", 362,
-# ].each_slice(2) do |t, e|
-# 	mg = MemoryGame.new(t)
-# 	mg.run(30000000)
-# 	r = mg.log.last
-# 	assert "Test 1 failed for t='#{t}': #{r} instead of #{e}" unless r == e
-# 	puts "#{t} -> #{r} / #{e}"
-# end
+t2 = [
+    "0,3,6", 175594,
+    "1,3,2", 2578,
+    "2,1,3", 3544142,
+    "1,2,3", 261214,
+    "2,3,1", 6895259,
+    "3,2,1", 18,
+    "3,1,2", 362,
+].each_slice(2) do |t, e|
+	mg = MemoryGame.new(t)
+	mg.run(30000000)
+	r = mg.log.last
+	assert "Test 2 failed for t='#{t}': #{r} instead of #{e}" unless r == e
+end
 
 
 # Question 2: Given your starting numbers, what will be the 30000000th number spoken?
